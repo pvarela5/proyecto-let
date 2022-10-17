@@ -1,0 +1,34 @@
+---
+title: "Introducción Proyecto"
+code-fold: true
+author: "Pedro Varela"
+format: html
+editor: visual
+toc-title-document: "Tabla de contenidos" 
+toc: true
+---
+
+# Descripción del tema
+
+En este proyecto se intentará comprender cómo las características de un auto usado influyen en su precio. Para esto se tomaran en cuenta autos usados publicados en un famoso catálogo de Bielorrusia. Al comprender cómo se relacionan las distintas variables con el precio del auto se podrían armar modelos que sirvan para estimar el precio de un auto en especifico basado en su información.
+
+Esto es útil tanto para personas que quieren vender o comprar un auto usado ya que se pueden hacer una idea del valor que tiene en el mercado un vehículo en específico y así hacer una buena compra o venta.
+
+# Datos
+
+Los datos de los autos usados provienen de un catálogo de Bielorrusia y fueron tomados el 2 de Diciembre de 2019. La base contiene la información de 38.531 autos usados a la venta con 10 variables:
+
+| variable            | tipo     | descripción                               |
+|---------------------|----------|-------------------------------------------|
+| `manufacturer_name` | caracter | Marca                                     |
+| `model_name`        | caracter | Modelo                                    |
+| `transmission`      | caracter | Tipo de transmisión (automático o manual) |
+| `color`             | caracter | Color                                     |
+| `odometer_value`    | numérica | Odómetro (en KM)                          |
+| `year_produced`     | numérica | Año de producción                         |
+| `engine_type`       | caracter | Tipo de motor (bencina o diesel)          |
+| `price_usd`         | numérica | Precio (en USD)                           |
+| `number_of_photos`  | numérica | Número de fotos en el catálogo            |
+| `duration_listed`   | numérica | Número de días en el catálogo             |
+
+# Análisis exploratorio
