@@ -1,3 +1,5 @@
+library(dplyr)
+
 # Importar datos ----
 
 datos <- read.csv("datos/cars.csv")
@@ -6,7 +8,6 @@ datos <- read.csv("datos/cars.csv")
 
 datos <- within(datos, {
   drivetrain <- NULL
-  engine_capacity <- NULL
   engine_has_gas <- NULL
   engine_fuel <- NULL
   state <- NULL
@@ -23,11 +24,13 @@ datos <- within(datos, {
   feature_9 <- NULL
   has_warranty <- NULL
   is_exchangeable <- NULL
-  location_region <- NULL
   up_counter <- NULL 
 })
 
-# Seleccionamos solo los autos con más de 100 km para asegurarnos de que sea usado.
+# Seleccionamos solo los autos con más de 100 km para asegurarnos de que sea usado y que el precio sea mayor a 100 usd.
 
-datos <- datos %>% filter(odometer_value > 100)
+datos <- datos %>% filter(odometer_value > 100, price_usd > 100)
 
+datos_limpios <- datos
+
+write_csv(datos_limpios, "datos/datos-limpios.csv")

@@ -1,26 +1,9 @@
 library(ggplot2)
 library(dplyr)
-
-
-
-
-sort(table(datos$manufacturer_name), decreasing=TRUE)[1:15]
-
-ggplot(marcas) +
-  aes(x = price_usd) +
-  geom_histogram(bins = 30L, fill = "#112446") +
-  theme_minimal()
-
-
-Rcmdr::Commander()
-
-GGally::ggpairs(variables_numericas)
-
-variables_numericas <- datos %>% 
-  select_if(is.numeric)
+library(fastDummies)
 
 ## Histograma precios
-ggplot(datos) +
+ggplot(datos_limpios) +
   aes(x = price_usd) +
   geom_histogram(bins = 40L, fill = "#111246") +
   labs(
@@ -30,13 +13,15 @@ ggplot(datos) +
   ) +
   theme_minimal()
 
-summary(datos$price_usd)
+ggsave("figuras/precios.png", width = 10, height = 7)
+
+summary(datos_limpios$price_usd)
 
 # Posibles outliers, comentar si se piensa hacer algo con ellos
 
 
 # Histograma año del auto
-ggplot(datos) +
+ggplot(datos_limpios) +
   aes(x = year_produced) +
   geom_histogram(bins = 35L, fill = "#112446") +
   labs(
@@ -46,15 +31,17 @@ ggplot(datos) +
   ) +
   theme_minimal()
 
-summary(datos$year_produced)
+ggsave("figuras/años.png", width = 10, height = 7)
+
+summary(datos_limpios$year_produced)
 
 # Posibles outliers, comentar si se piensa hacer algo con ellos
 
 
 # Marcas con más avisos
 
-marcas <- tail(names(sort(table(datos$manufacturer_name))), 15)
-marcas_mas_publicadas <- filter(datos, manufacturer_name %in% marcas)
+marcas <- tail(names(sort(table(datos_limpios$manufacturer_name))), 15)
+marcas_mas_publicadas <- filter(datos_limpios, manufacturer_name %in% marcas)
 
 
 ggplot(marcas_mas_publicadas) +
@@ -66,3 +53,15 @@ ggplot(marcas_mas_publicadas) +
     title = "Las 15 marcas con más avisos"
   ) +
   theme_minimal()
+
+# Relación entre variables
+
+variables_numericas <- datos_limpios %>% 
+  select_if(is.numeric) %>% 
+  select("price_usd", everything())
+
+GGally::ggpairs(variables_numericas)
+ggsave("figuras/relaciones.png", width = 10, height = 7)
+
+
+

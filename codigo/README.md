@@ -1,3 +1,3 @@
 # Código
 
-En esta carpeta vamos a guardar el código que escribamos en clases.
+En esta carpeta vamos a guardar los código que escribamos para el proyecto.
