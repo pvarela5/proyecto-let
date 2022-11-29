@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.1.251">
@@ -8,7 +8,7 @@
 
 <meta name="author" content="Pedro Varela">
 
-<title>Introducción Proyecto</title>
+<title>Análisis venta de autos usados y modelos para predecir su precio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -34,6 +97,49 @@ ul.task-list li input[type="checkbox"] {
 <script src="informe_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="informe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="informe_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="informe_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="informe_files/libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="informe_files/libs/proj4js-2.3.15/proj4.js"></script>
+<link href="informe_files/libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="informe_files/libs/highcharts-9.3.1/highcharts.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/highcharts-3d.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/highcharts-more.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/stock.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/map.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/data.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/exporting.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/offline-exporting.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/drilldown.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/item-series.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/annotations.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/export-data.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/funnel.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/heatmap.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/treemap.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/sankey.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/dependency-wheel.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/organization.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/solid-gauge.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/streamgraph.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/sunburst.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/vector.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/wordcloud.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/xrange.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/tilemap.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/venn.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/gantt.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/timeline.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/bullet.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/coloraxis.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/dumbbell.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/lollipop.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/series-label.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/plugins/motion.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/custom/reset.js"></script>
+<script src="informe_files/libs/highcharts-9.3.1/modules/boost.js"></script>
+<script src="informe_files/libs/highchart-binding-0.9.4/highchart.js"></script>
 
 
 </head>
@@ -46,10 +152,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#descripción-del-tema" id="toc-descripción-del-tema" class="nav-link active" data-scroll-target="#descripción-del-tema">Descripción del tema</a></li>
-  <li><a href="#datos" id="toc-datos" class="nav-link" data-scroll-target="#datos">Datos</a></li>
+  <li><a href="#resumen" id="toc-resumen" class="nav-link active" data-scroll-target="#resumen">Resumen</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción">Introducción</a></li>
+  <li><a href="#datos" id="toc-datos" class="nav-link" data-scroll-target="#datos">Datos</a>
+  <ul class="collapse">
   <li><a href="#análisis-exploratorio" id="toc-análisis-exploratorio" class="nav-link" data-scroll-target="#análisis-exploratorio">Análisis exploratorio</a></li>
-  <li><a href="#pasos-a-seguir" id="toc-pasos-a-seguir" class="nav-link" data-scroll-target="#pasos-a-seguir">Pasos a seguir</a></li>
+  </ul></li>
+  <li><a href="#metodología" id="toc-metodología" class="nav-link" data-scroll-target="#metodología">Metodología</a>
+  <ul class="collapse">
+  <li><a href="#sin-outliers" id="toc-sin-outliers" class="nav-link" data-scroll-target="#sin-outliers">Sin outliers</a></li>
+  <li><a href="#outliers" id="toc-outliers" class="nav-link" data-scroll-target="#outliers">Outliers</a></li>
+  </ul></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">Conclusiones</a></li>
   </ul>
 </nav>
 </div>
@@ -57,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducción Proyecto</h1>
+<h1 class="title">Análisis venta de autos usados y modelos para predecir su precio</h1>
 </div>
 
 
@@ -65,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Autor</div>
     <div class="quarto-title-meta-contents">
              <p>Pedro Varela </p>
           </div>
@@ -77,17 +191,42 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="descripción-del-tema" class="level1">
-<h1>Descripción del tema</h1>
-<p>En este proyecto se intentará comprender cómo las características de un auto usado influyen en su precio. Para esto se tomaran en cuenta autos usados publicados en un famoso catálogo de Bielorrusia. Al comprender cómo se relacionan las distintas variables con el precio del auto se podrían armar modelos que sirvan para estimar el precio de un auto en especifico basado en su información.</p>
-<p>Esto es útil tanto para personas que quieren vender o comprar un auto usado ya que se pueden hacer una idea del valor que tiene en el mercado un vehículo en específico y así hacer una buena compra o venta.</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(highcharter)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xtable)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>datos_limpios <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datos/datos-limpios.csv"</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>base_sin_out <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"datos/datos-sin-outliers.csv"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="resumen" class="level1">
+<h1>Resumen</h1>
+<p>Cada día personas de casi todo el mundo piensan en vender su auto o comprar uno usado, sin tener mucho conocimiento en cuánto debiera ser el precio de este. Para poder saber cuál sería un “precio justo” o el “precio de mercado” que tiene un vehículo, se analizaron cerca de 38.000 datos de diferentes automóviles usados a la venta. Se concluyó que diversas características del auto son influyentes en su precio tales como su edad o la capacidad del motor.</p>
+</section>
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>Muchas personas a la hora de comprar o vender un vehículo usado deben revisar diferentes opciones y hacerse una serie de preguntas para saber cuál se ajusta más a sus necesidades y capacidad de compra.</p>
+<p>Para este proyecto se usaran datos provenientes de un catálogo de Bielorrusia tomados el 2 de Diciembre de 2019. Con ellos se intentará comprender cómo las características de un auto usado influyen en su precio. Al comprender cómo se relacionan las distintas variables con el precio del auto se podrían armar modelos que sirvan para estimar el precio de un auto en específico basado en su información.</p>
+<p>Esto es útil tanto para personas que quieren vender como comprar un auto usado, ya que se pueden hacer una idea del valor que tiene en el mercado un vehículo en específico y así hacer una buena compra o venta donde el valor del vehículo sea adecuado al precio del mercado.</p>
 </section>
 <section id="datos" class="level1">
 <h1>Datos</h1>
-<p>Los datos de los autos usados provienen de un catálogo de Bielorrusia y fueron tomados el 2 de Diciembre de 2019. La base contiene la información de 37.948 autos usados a la venta con 12 variables:</p>
+<p>Los datos de los autos usados provienen de un catálogo de Bielorrusia y fueron tomados el 2 de Diciembre de 2019. Estos datos fueron obtenidos de la plataforma Kaggle (<a href="https://www.kaggle.com/datasets/lepchenkov/usedcarscatalog">de aquí se descargaron</a>). Se le hizo una limpieza a la base para simplificar el análisis. Se eliminaron los autos con datos faltantes y algunas variables que no se especificaba para que servían o que la información que entregaban era redundante y/o no era información relevante para el caso. La variable edad fue construida restando 2020 (muy cercano a cuándo fue tomada la base) con el año de producción del automóvil (la cuál fue retirada después ya que nos entregaba la misma información).</p>
+<p>La base “limpia” contiene la información de 37.938 autos usados a la venta con 14 variables:</p>
 <table class="table">
 <colgroup>
-<col style="width: 28%">
+<col style="width: 27%">
 <col style="width: 13%">
 <col style="width: 58%">
 </colgroup>
@@ -100,82 +239,556 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>manufacturer_name</code></td>
+<td><code>marca</code></td>
 <td>caracter</td>
-<td>Marca</td>
+<td>Marca del vehículo</td>
 </tr>
 <tr class="even">
-<td><code>model_name</code></td>
+<td><code>modelo</code></td>
 <td>caracter</td>
-<td>Modelo</td>
+<td>Modelo del vehículo</td>
 </tr>
 <tr class="odd">
-<td><code>transmission</code></td>
+<td><code>transmision</code></td>
 <td>caracter</td>
 <td>Tipo de transmisión (automático o manual)</td>
 </tr>
 <tr class="even">
 <td><code>color</code></td>
 <td>caracter</td>
-<td>Color</td>
+<td>Color del vehículo</td>
 </tr>
 <tr class="odd">
-<td><code>odometer_value</code></td>
+<td><code>kilometraje</code></td>
 <td>numérica</td>
-<td>Odómetro (en KM)</td>
+<td>Kilometraje del vehículo</td>
 </tr>
 <tr class="even">
-<td><code>year_produced</code></td>
+<td><code>año_produccion</code></td>
 <td>numérica</td>
-<td>Año de producción</td>
+<td>Año de producción del vehículo</td>
 </tr>
 <tr class="odd">
-<td><code>engine_type</code></td>
+<td><code>tipo_motor</code></td>
 <td>caracter</td>
 <td>Tipo de motor (bencina o diesel)</td>
 </tr>
 <tr class="even">
-<td><code>engine_capacity</code></td>
+<td><code>capacidad_motor</code></td>
 <td>numérica</td>
 <td>Capacidad del motor</td>
 </tr>
 <tr class="odd">
-<td><code>price_usd</code></td>
+<td><code>carroceria</code></td>
+<td>caracter</td>
+<td>Tipo de carroceríadel vehículo (SUV</td>
+</tr>
+<tr class="even">
+<td><code>traccion</code></td>
+<td>caracter</td>
+<td>Tipo de tracción del vehículo</td>
+</tr>
+<tr class="odd">
+<td><code>precio_en_usd</code></td>
 <td>numérica</td>
 <td>Precio (en USD)</td>
 </tr>
 <tr class="even">
-<td><code>location_region</code></td>
-<td>caracter</td>
-<td>Región en donde se vende el auto</td>
-</tr>
-<tr class="odd">
-<td><code>number_of_photos</code></td>
+<td><code>num_fotos</code></td>
 <td>numérica</td>
 <td>Número de fotos en el catálogo</td>
 </tr>
-<tr class="even">
-<td><code>duration_listed</code></td>
+<tr class="odd">
+<td><code>dias_en_catalogo</code></td>
 <td>numérica</td>
 <td>Número de días en el catálogo</td>
 </tr>
+<tr class="even">
+<td><code>edad</code></td>
+<td>numérica</td>
+<td>Edad del auto (al año 2020)</td>
+</tr>
 </tbody>
 </table>
-</section>
-<section id="análisis-exploratorio" class="level1">
-<h1>Análisis exploratorio</h1>
-<p><img src="images/precios.png" class="img-fluid"></p>
+<p>Además se creó otra base con estos mismos datos pero quitando algunos ouliers.</p>
+<section id="análisis-exploratorio" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-exploratorio">Análisis exploratorio</h2>
+<p>Veamos entre que rangos de precio se distribuyen los vehículos en la <a href="#fig-precios">Figura&nbsp;1</a>:</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos_limpios <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> precio_en_usd)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> 40L, <span class="at">fill =</span> <span class="st">"#111246"</span>) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cantidad"</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">dollar_format</span>()) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-precios" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Precio de los autos (en US)</figcaption><p></p>
+<p><img src="informe_files/figure-html/fig-precios-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Vemos que el precio de venta para la mayoría de los autos está entre los 2000 y los 7000 USD.</p>
-<p><img src="images/a%C3%B1os.png" class="img-fluid"></p>
-<p>Existen algunos autos a la venta que son muy viejos, es posible que se trate de outliers. Se analizará si es necesario quitar estos valores para obtener un mejor modelo.</p>
-<p>Además observamos que la mayoría de los vehículos fueron fabricados alredor del 2000.</p>
-<p>Ahora veremos un conjunto de gráficos para comprender como se relacionan algunas variables entre si y si existe correlación entre ellas.</p>
-<p><img src="images/relaciones-02.png" class="img-fluid"></p>
-<p>Notamos gran correlación entre el precio del auto y el año en que fue fabricado, tiene sentido suponer que para autos más nuevos el precio será mayor. Nuevamente se ven observaciones que podrían ser outliers (vemos un auto fabricado en 1940 con alto precio). Además por lo que se ve en el gráfico se podría pensar que a medida aumenta el kilometraje de un auto su precio dismuye.</p>
+<p>Ahora veremos cómo se distribuyen los autos en relación a su año de producción. Esto lo podemos observar en la <a href="#fig-años">Figura&nbsp;2</a>:</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_limpios) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> edad) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> 35L, <span class="at">fill =</span> <span class="st">"#112446"</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cantidad"</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-años" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Año de produccón del auto</figcaption><p></p>
+<p><img src="informe_files/figure-html/fig-años-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notamos algunos autos a la venta que son muy viejos, es posible que se trate de autos de “colección”.</p>
+<p>Además observamos que la mayoría de los vehículos fueron fabricados alredor del año 2000.</p>
+<p>En los siguientes gráficos se muestra cuáles son las marcas con más vehículos a la venta <a href="#fig-marcas">Figura&nbsp;3</a> y el precio promedio para cada marca ( <a href="#fig-promedio-marcas">Figura&nbsp;4</a> )</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_limpios) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(marca)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#112446"</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cantidad"</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-marcas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Cantidad de autos por marca</figcaption><p></p>
+<p><img src="informe_files/figure-html/fig-marcas-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_limpios, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(marca, <span class="sc">-</span> precio_en_usd), <span class="at">y =</span> precio_en_usd)) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">fill =</span> <span class="st">"#112446"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Precio promedio"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-promedio-marcas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figura&nbsp;4: Precio promedio por marca</figcaption><p></p>
+<p><img src="informe_files/figure-html/fig-promedio-marcas-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Volskwagen es la marca con más anuncios por gran diferencia, además su precio promedio es bastante accesible en comparación con otros, encontrándose cercano a la mediana.</p>
+<p>Por otro lado, no es sorpresa que para marcas consideradoas “de lujo” como Porsche o Jaguar el precio medio asciende considerablemente y la cantidad de anuncios es mucho menor.</p>
+<p>También es interesante ver que carrocería (o tipo de auto) es más usado ( <a href="#fig-carrocerias">Figura&nbsp;5</a> ) y su precio promedio ( <a href="#fig-promedio-carrocerias">Figura&nbsp;6</a> )</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_limpios) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_infreq</span>(carroceria)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#112446"</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cantidad"</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Cantidad de autos por carrocería"</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-carrocerias" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figura&nbsp;5: Cantidad de autos por carrocería</figcaption><p></p>
+<p><img src="informe_files/figure-html/fig-carrocerias-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_limpios, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(carroceria, <span class="sc">-</span> precio_en_usd), <span class="at">y =</span> precio_en_usd)) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">fill =</span> <span class="st">"#112446"</span>) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Precio promedio"</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Precio promedio por carrocería"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-promedio-carrocerias" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figura&nbsp;6: Precio promedio por carrocería</figcaption><p></p>
+<p><img src="informe_files/figure-html/fig-promedio-carrocerias-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Por último, debemos ver cómo se relacionan las variables (solo las numéricas). Esto lo vemos con las correlaciones mostradas en la <a href="#fig-correlaciones">Figura&nbsp;7</a>, la cual es interactiva:</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>variables_numericas <span class="ot">&lt;-</span> datos_limpios <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">"precio_en_usd"</span>, <span class="fu">everything</span>())</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hchart</span>(<span class="fu">cor</span>(variables_numericas))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-correlaciones" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p></p><figcaption class="figure-caption">Figura&nbsp;7: Correlación entre variables numéricas</figcaption><p></p>
+
+<div id="htmlwidget-0ab179b672d5323332ac" style="width:100%;height:464px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0ab179b672d5323332ac">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":null},"yAxis":{"title":{"text":""},"categories":["precio_en_usd","kilometraje","capacidad_motor","num_fotos","dias_en_catalogo","edad"],"reversed":true},"credits":{"enabled":false},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false,"boderWidth":0,"dataLabels":{"enabled":false}},"treemap":{"layoutAlgorithm":"squarified"}},"series":[{"data":[{"x":0,"y":0,"value":1,"name":"precio_en_usd ~ precio_en_usd"},{"x":0,"y":1,"value":-0.397910055009139,"name":"precio_en_usd ~ kilometraje"},{"x":0,"y":2,"value":0.333488434118067,"name":"precio_en_usd ~ capacidad_motor"},{"x":0,"y":3,"value":0.312664357207967,"name":"precio_en_usd ~ num_fotos"},{"x":0,"y":4,"value":0.0459610851332262,"name":"precio_en_usd ~ dias_en_catalogo"},{"x":0,"y":5,"value":-0.699054125397371,"name":"precio_en_usd ~ edad"},{"x":1,"y":0,"value":-0.397910055009139,"name":"kilometraje ~ precio_en_usd"},{"x":1,"y":1,"value":1,"name":"kilometraje ~ kilometraje"},{"x":1,"y":2,"value":0.0961717599338392,"name":"kilometraje ~ capacidad_motor"},{"x":1,"y":3,"value":-0.133783470899682,"name":"kilometraje ~ num_fotos"},{"x":1,"y":4,"value":-0.00966328931341153,"name":"kilometraje ~ dias_en_catalogo"},{"x":1,"y":5,"value":0.474318336455508,"name":"kilometraje ~ edad"},{"x":2,"y":0,"value":0.333488434118067,"name":"capacidad_motor ~ precio_en_usd"},{"x":2,"y":1,"value":0.0961717599338392,"name":"capacidad_motor ~ kilometraje"},{"x":2,"y":2,"value":1,"name":"capacidad_motor ~ capacidad_motor"},{"x":2,"y":3,"value":0.112761961548836,"name":"capacidad_motor ~ num_fotos"},{"x":2,"y":4,"value":0.0769973994593232,"name":"capacidad_motor ~ dias_en_catalogo"},{"x":2,"y":5,"value":-0.0181113967028514,"name":"capacidad_motor ~ edad"},{"x":3,"y":0,"value":0.312664357207967,"name":"num_fotos ~ precio_en_usd"},{"x":3,"y":1,"value":-0.133783470899682,"name":"num_fotos ~ kilometraje"},{"x":3,"y":2,"value":0.112761961548836,"name":"num_fotos ~ capacidad_motor"},{"x":3,"y":3,"value":1,"name":"num_fotos ~ num_fotos"},{"x":3,"y":4,"value":-0.0243553356896476,"name":"num_fotos ~ dias_en_catalogo"},{"x":3,"y":5,"value":-0.247270664311192,"name":"num_fotos ~ edad"},{"x":4,"y":0,"value":0.0459610851332262,"name":"dias_en_catalogo ~ precio_en_usd"},{"x":4,"y":1,"value":-0.00966328931341153,"name":"dias_en_catalogo ~ kilometraje"},{"x":4,"y":2,"value":0.0769973994593232,"name":"dias_en_catalogo ~ capacidad_motor"},{"x":4,"y":3,"value":-0.0243553356896476,"name":"dias_en_catalogo ~ num_fotos"},{"x":4,"y":4,"value":1,"name":"dias_en_catalogo ~ dias_en_catalogo"},{"x":4,"y":5,"value":0.00935251796535749,"name":"dias_en_catalogo ~ edad"},{"x":5,"y":0,"value":-0.699054125397371,"name":"edad ~ precio_en_usd"},{"x":5,"y":1,"value":0.474318336455508,"name":"edad ~ kilometraje"},{"x":5,"y":2,"value":-0.0181113967028514,"name":"edad ~ capacidad_motor"},{"x":5,"y":3,"value":-0.247270664311192,"name":"edad ~ num_fotos"},{"x":5,"y":4,"value":0.00935251796535749,"name":"edad ~ dias_en_catalogo"},{"x":5,"y":5,"value":1,"name":"edad ~ edad"}],"type":"heatmap"}],"tooltip":{"formatter":"function(){\n                 return this.point.name + ': ' +\n                   Highcharts.numberFormat(this.point.value, 2)\n               }"},"legend":{"enabled":true},"colorAxis":{"auxarg":true,"stops":[[0,"#FF5733"],[0.5,"#F8F5F5"],[1,"#2E86C1"]],"min":-1,"max":1},"xAxis":{"categories":["precio_en_usd","kilometraje","capacidad_motor","num_fotos","dias_en_catalogo","edad"],"title":{"text":""},"opposite":true}},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.tooltip.formatter"],"jsHooks":[]}</script>
+</figure>
+</div>
+</div>
+<p>Notamos gran correlación entre el precio del auto y la edad de este, tiene sentido suponer que para autos más nuevos el precio será mayor. Además el precio esta correlacionado en menor medida con el kilometraje, la capacidad del motor y el número de fotos.</p>
 </section>
-<section id="pasos-a-seguir" class="level1">
-<h1>Pasos a seguir</h1>
-<p>Se crearan distintos modelos de regresión para comprender que variables afectan en el precio del vehículo y de que manera lo hacen. A priori podemos pensar que el año del auto y el kilometraje (valor del odómetro) tienen gran influencia. También se ananlizará si algunas carcateristicas del anuncio como la cantidad de fotos o el sector influyen en el precio.</p>
+</section>
+<section id="metodología" class="level1">
+<h1>Metodología</h1>
+<p>Se realizarán dos regresiones, una con todos los datos y otra quitando los datos considerados como outliers. Luego compararemos que tan bien se ajusta el modelo para estos dos casos.</p>
+<section id="sin-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="sin-outliers">Sin outliers</h2>
+<p>Se hicieron distintos modelos de regresión (backward, forward, stepwise, etc.) con el criterio AIC y BIC. Para todos estos modelos los resultados fueron los mismos. A continuación se muestran los resultados para el modelo stepwise con criterio AIC ( <a href="#tbl-step-aic">Tabla&nbsp;1</a> ) y para el modelo backward con criterio BIC ( <a href="#tbl-b">Tabla&nbsp;2</a> ).</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>modelo_nulo <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio_en_usd <span class="sc">~</span> <span class="dv">1</span> <span class="sc">-</span>marca <span class="sc">-</span>modelo <span class="sc">-</span>transmision <span class="sc">-</span>color <span class="sc">-</span>tipo_motor <span class="sc">-</span>carroceria <span class="sc">-</span>traccion , datos_limpios)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>modelo_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio_en_usd <span class="sc">~</span> . <span class="sc">-</span>marca <span class="sc">-</span>modelo <span class="sc">-</span>transmision <span class="sc">-</span>color <span class="sc">-</span>tipo_motor <span class="sc">-</span>carroceria <span class="sc">-</span>traccion, datos_limpios)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>step_aic <span class="ot">&lt;-</span> <span class="fu">step</span>(modelo_nulo, <span class="at">scope =</span> <span class="fu">formula</span>(modelo_full), <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(step_aic, <span class="at">file=</span><span class="st">"output.html"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="tbl-step-aic" class="anchored">
+
+<table style="border-collapse:collapse; border:none;"><caption>Tabla&nbsp;1:  Modelo stepwise con criterio AIC </caption>
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">precio en usd</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">8768.18</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">8601.73&nbsp;–&nbsp;8934.63</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">edad</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-463.88</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-469.42&nbsp;–&nbsp;-458.33</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">capacidad motor</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2874.87</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2817.90&nbsp;–&nbsp;2931.84</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">kilometraje</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.01&nbsp;–&nbsp;-0.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">num fotos</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">109.54</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">103.11&nbsp;–&nbsp;115.96</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">dias en catalogo</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.19&nbsp;–&nbsp;1.87</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">37938</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.617 / 0.617</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>back_bic <span class="ot">&lt;-</span> <span class="fu">step</span>(modelo_full, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos_limpios)), <span class="at">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(back_bic, <span class="at">file=</span><span class="st">"output.html"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="tbl-b" class="anchored">
+
+<table style="border-collapse:collapse; border:none;"><caption>Tabla&nbsp;2:  Modelo backward con criterio BIC </caption>
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">precio en usd</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">8768.18</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">8601.73&nbsp;–&nbsp;8934.63</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">kilometraje</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.01&nbsp;–&nbsp;-0.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">capacidad motor</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2874.87</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2817.90&nbsp;–&nbsp;2931.84</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">num fotos</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">109.54</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">103.11&nbsp;–&nbsp;115.96</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">dias en catalogo</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.19&nbsp;–&nbsp;1.87</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">edad</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-463.88</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-469.42&nbsp;–&nbsp;-458.33</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">37938</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.617 / 0.617</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+</div>
+<p>Podemos ver, tal como dijimos antes, que los resultados son los mismos. Para todos los modelos tenemos que las variables: edad, capacidad del motor, kilometraje, número de fotos y días en el catálogo son significativas. Por otro lado, el valor del R-cuadrado ajustado es bastante bueno. Por lo que se podría aceptar el modelo.</p>
+<p>Se analizo si existía multicolinealidad entre algunas variables a través del valor FIV para saber si era necesario sacar alguna de ellas. Estos valores los vemos en <a href="#tbl-vif">Tabla&nbsp;3</a>:</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">vif</span>(modelo_full))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="tbl-vif" class="anchored">
+<table class="table table-sm table-striped">
+<caption>Tabla&nbsp;3: Valores FIV</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">kilometraje</td>
+<td style="text-align: right;">1.311184</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">capacidad_motor</td>
+<td style="text-align: right;">1.035394</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">num_fotos</td>
+<td style="text-align: right;">1.080926</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dias_en_catalogo</td>
+<td style="text-align: right;">1.007801</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">edad</td>
+<td style="text-align: right;">1.353542</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Al ser todos estos valores menores a 10 podemos decir que no hay problemas de colinealidad.</p>
+</section>
+<section id="outliers" class="level2">
+<h2 class="anchored" data-anchor-id="outliers">Outliers</h2>
+<p>A continuación, se sacarán los valores que puedan ser considerados como outliers. Debido a la gran cantidad de datos no fue posible hacer esto para toda la base. Por lo que se separaró los datos según carrocería, se eliminaron los valores extremos para cada grupo, y luego se junto todas estas bases sin outliers.</p>
+<p>Entonces, para cada grupo debemos identificar estos puntos. Primero buscamos los puntos palanca, es decir, los que alteran mucho al modelo. Luego analizamos los residuos de la regresión y se eliminamos los outliers con mayor residuo.</p>
+<p>A continuación se puede desplegar parte del código utilizado para quitar los outliers de la carrocería SUV.</p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>base_suv <span class="ot">&lt;-</span> datos_limpios <span class="sc">%&gt;%</span> <span class="fu">filter</span>(carroceria <span class="sc">==</span> <span class="st">"suv"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>base_suv <span class="ot">&lt;-</span> base_suv <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>carroceria)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>modelo_nulo_suv <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio_en_usd <span class="sc">~</span> <span class="dv">1</span> <span class="sc">-</span> marca <span class="sc">-</span> modelo <span class="sc">-</span> transmision <span class="sc">-</span> color <span class="sc">-</span> tipo_motor <span class="sc">-</span> traccion, <span class="at">data =</span> base_suv)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>modelo_full_suv <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio_en_usd <span class="sc">~</span> . <span class="sc">-</span> marca <span class="sc">-</span> modelo <span class="sc">-</span> transmision <span class="sc">-</span> color <span class="sc">-</span> tipo_motor <span class="sc">-</span> traccion, <span class="at">data =</span> base_suv)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>step_aic_suv <span class="ot">&lt;-</span> <span class="fu">step</span>(modelo_nulo_suv, <span class="at">scope =</span> <span class="fu">formula</span>(modelo_full_suv), <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># PUNTOS PALANCA EN NUESTRA BD</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(modelo_full_suv)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> X <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Los h_ii son los elementos de la diagonal</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>hii <span class="ot">&lt;-</span> <span class="fu">diag</span>(H)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Ahora vemos cuales valores son mayoresa a 2p/n para denominarse puntos palanca</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(modelo_full_suv<span class="sc">$</span>coefficients)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(hii)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>pts_palanca <span class="ot">&lt;-</span> <span class="fu">which</span>(hii <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> p <span class="sc">/</span> n)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Ahora vemos outliers con los residuos studentizados</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># significancia</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>t_alpha <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, n <span class="sc">-</span> p <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="co"># trabajaremos con unicamente los Residuos studentizados externamente</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>res_ext <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(step_aic_suv)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>Out <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">abs</span>(res_ext) <span class="sc">&gt;</span> t_alpha)</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>palanca_outliers <span class="ot">&lt;-</span> pts_palanca[pts_palanca <span class="sc">%in%</span> Out]</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>palanca_outliers <span class="ot">&lt;-</span> <span class="fu">unique</span>(palanca_outliers, <span class="at">incomparables =</span> F)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>base_suv1 <span class="ot">&lt;-</span> base_suv[<span class="sc">-</span>palanca_outliers, ]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Cómo se explico anteriormente, se hizo esto para cada tipo de auto y luego se juntaron todas estas bases “libres” de outliers. Al juntar todo esto nos queda una base de datos con 3.698 observaciones, es decir, se identificaron y eliminaron 956 puntos considerados como outliers.</p>
+<p>Con esta nueva base se generará otro modelo de regresión para compararlo con el que si contiene los outliers y ver cuál se ajusta mejor.</p>
+<p>Los resultados para este modelo lo podemos ver en <a href="#tbl-step-aic-sin-out">Tabla&nbsp;4</a></p>
+<div class="cell">
+<details>
+<summary>código fuente</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>modelo_nulo <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio_en_usd <span class="sc">~</span> <span class="dv">1</span> <span class="sc">-</span>marca <span class="sc">-</span>modelo <span class="sc">-</span>transmision <span class="sc">-</span>color <span class="sc">-</span>tipo_motor <span class="sc">-</span>traccion , base_sin_out)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>modelo_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio_en_usd <span class="sc">~</span> . <span class="sc">-</span>marca <span class="sc">-</span>modelo <span class="sc">-</span>transmision <span class="sc">-</span>color <span class="sc">-</span>tipo_motor <span class="sc">-</span>traccion, base_sin_out)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>step_aic <span class="ot">&lt;-</span> <span class="fu">step</span>(modelo_nulo, <span class="at">scope =</span> <span class="fu">formula</span>(modelo_full), <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(step_aic, <span class="at">file=</span><span class="st">"output.html"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="tbl-step-aic-sin-out" class="anchored">
+
+<table style="border-collapse:collapse; border:none;"><caption>Tabla&nbsp;4:  Modelo stepwise para bse sin outliers con criterio AIC </caption>
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">precio en usd</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">9301.29</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">9139.17&nbsp;–&nbsp;9463.41</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">edad</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-495.20</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-500.77&nbsp;–&nbsp;-489.63</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">capacidad motor</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2778.85</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2723.18&nbsp;–&nbsp;2834.52</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">num fotos</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">94.56</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">88.27&nbsp;–&nbsp;100.84</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">kilometraje</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.00&nbsp;–&nbsp;-0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">dias en catalogo</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.04</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.71&nbsp;–&nbsp;1.37</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">36982</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> / R<sup>2</sup> adjusted</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.636 / 0.636</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+</div>
+<p>Vemos que, para este modelo tenemos las mismas variables significativas que en la <a href="#tbl-step-aic">Tabla&nbsp;1</a> y las estimaciones son bastante similiares. Además notamos que el R-cuadrado ajustado mejora un poco, por lo que se podría pensar que este modelo ajusta un poco mejor los datos.</p>
+</section>
+</section>
+<section id="conclusiones" class="level1">
+<h1>Conclusiones</h1>
+<p>Las características más importantes para predecir el valor de un auto usado son: la edad, la capacidad del motor, número de fotos del vehículo, el kilometraje y la cantidad de días que este lleva en el catálogo (o vendiéndose).</p>
+<p>Podemos concluir que se pueden armar modelos mejores al eliminar ciertos datos que hacen mucho ruido o son muy anormales en la muestra, aunque la diferencia no es mucha y el trabajo es muy costoso, por lo que no vale la pena todo este proceso para tan poca ganancia.</p>
+<p>Es posible que al eliminar outliers de otra manera, por ejemplo, separando según rangos de precio se hubiera llegado a un mejor modelo y de manera menos costosa. Otra opción pudo haber sido separar por rango de edad.</p>
+<p>Aún asi el primer modelo es bastante bueno y podría predecir precios de autos usados con gran exactitud, ayudando a personas que quieran comprar un vehículo usado o venderlo.</p>
 </section>
 
 </main>
@@ -220,7 +833,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copiada");
     setTimeout(function() {
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');

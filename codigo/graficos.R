@@ -2,36 +2,38 @@ library(ggplot2)
 library(dplyr)
 library(fastDummies)
 
+datos_limpios <- read.csv("datos/datos-limpios.csv")
+
 ## Histograma precios
 ggplot(datos_limpios) +
-  aes(x = price_usd) +
+  aes(x = precio_en_usd) +
   geom_histogram(bins = 40L, fill = "#111246") +
   labs(
-    x = "$",
+    x = "",
     y = "Cantidad",
-    title = "Precio de los autos (en US)"
-  ) +
+    title = "Precio de los autos (en US)") +
+  scale_x_continuous(labels = scales::dollar_format()) +
   theme_minimal()
 
-ggsave("figuras/precios.png", width = 10, height = 7)
+ggsave("productos/images/precios.png", width = 10, height = 7)
 
-summary(datos_limpios$price_usd)
+summary(datos_limpios$precio_en_usd)
 
 # Posibles outliers, comentar si se piensa hacer algo con ellos
 
 
 # Histograma año del auto
 ggplot(datos_limpios) +
-  aes(x = year_produced) +
+  aes(x = año_produccion) +
   geom_histogram(bins = 35L, fill = "#112446") +
   labs(
-    x = "Año",
+    x = "",
     y = "Cantidad",
     title = "Año de produccón del auto"
   ) +
   theme_minimal()
 
-ggsave("figuras/años.png", width = 10, height = 7)
+ggsave("productos/images/años.png", width = 10, height = 7)
 
 summary(datos_limpios$year_produced)
 
@@ -58,10 +60,14 @@ ggplot(marcas_mas_publicadas) +
 
 variables_numericas <- datos_limpios %>% 
   select_if(is.numeric) %>% 
-  select("price_usd", everything())
+  select("precio_en_usd", everything())
 
 GGally::ggpairs(variables_numericas)
+
 ggsave("figuras/relaciones.png", width = 10, height = 7)
 
 
+
+
+#
 
