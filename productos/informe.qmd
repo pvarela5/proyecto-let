@@ -1,5 +1,5 @@
 ---
-title: "Análisis venta de autos usados y modelos para predecir su precio"
+title: "Análisis de la venta de autos usados y modelos para predecir su precio"
 
 author: "Pedro Varela"
 format:
@@ -23,7 +23,6 @@ library(dplyr)
 library(tidyverse)
 library(ggplot2)
 library(highcharter)
-library(ggplot2)
 library(knitr)
 library(tidyr)
 library(xtable)
@@ -69,7 +68,7 @@ La base "limpia" contiene la información de 37.938 autos usados a la venta con 
 | `dias_en_catalogo` | numérica | Número de días en el catálogo             |
 | `edad`             | numérica | Edad del auto (al año 2020)               |
 
-Además se creó otra base con estos mismos datos pero quitando algunos ouliers.
+Además se creó otra base con estos mismos datos pero quitando algunos outliers.
 
 ## Análisis exploratorio
 
@@ -94,7 +93,7 @@ Vemos que el precio de venta para la mayoría de los autos está entre los 2000 
 Ahora veremos cómo se distribuyen los autos en relación a su año de producción. Esto lo podemos observar en la @fig-años:
 
 ```{r}
-#| fig-cap: "Año de produccón del auto"
+#| fig-cap: "Edad del auto"
 #| label: fig-años
 ggplot(datos_limpios) +
   aes(x = edad) +
@@ -107,7 +106,7 @@ ggplot(datos_limpios) +
 
 Notamos algunos autos a la venta que son muy viejos, es posible que se trate de autos de "colección".
 
-Además observamos que la mayoría de los vehículos fueron fabricados alredor del año 2000.
+Además observamos que la mayoría de los vehículos tiene alrededor de 20 años.
 
 En los siguientes gráficos se muestra cuáles son las marcas con más vehículos a la venta @fig-marcas y el precio promedio para cada marca ( @fig-promedio-marcas )
 

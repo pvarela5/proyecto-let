@@ -1,0 +1,176 @@
+---
+title: "Análisis de la venta de autos usados y modelos para predecir su precio"
+
+author: "Pedro Varela"
+format: 
+  revealjs:
+    incremental: true
+    theme: default
+editor: visual
+
+lang: es
+---
+
+::: {style="text-align: center"}
+# ¿Alguna vez has pensado en vender tu auto o comprar alguno usado?
+:::
+
+## Problemas y dudas
+
+::: incremental
+-   ¿Cuál precio es conveniente o justo?
+-   ¿Qué cosas influyen en el precio?
+-   ¿Hay características que influyan más que otras?
+:::
+
+------------------------------------------------------------------------
+
+## Datos {.scrollable}
+
+Catálogo autos usados en Bielorrusia
+
+| variable           | tipo     | descripción                               |
+|--------------------|----------|-------------------------------------------|
+| `marca`            | caracter | Marca del vehículo                        |
+| `modelo`           | caracter | Modelo del vehículo                       |
+| `transmision`      | caracter | Tipo de transmisión (automático o manual) |
+| `color`            | caracter | Color del vehículo                        |
+| `kilometraje`      | numérica | Kilometraje del vehículo                  |
+| `año_produccion`   | numérica | Año de producción del vehículo            |
+| `tipo_motor`       | caracter | Tipo de motor (bencina o diesel)          |
+| `capacidad_motor`  | numérica | Capacidad del motor                       |
+| `carroceria`       | caracter | Tipo de carroceríadel vehículo (SUV       |
+| `traccion`         | caracter | Tipo de tracción del vehículo             |
+| `precio_en_usd`    | numérica | Precio (en USD)                           |
+| `num_fotos`        | numérica | Número de fotos en el catálogo            |
+| `dias_en_catalogo` | numérica | Número de días en el catálogo             |
+| `edad`             | numérica | Edad del auto (al año 2020)               |
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(highcharter)
+library(ggplot2)
+library(knitr)
+library(tidyr)
+library(xtable)
+library(sjPlot)
+library(car)
+
+
+datos_limpios <- read_csv(here::here("datos/datos-limpios.csv"))
+base_sin_out <- read_csv(here::here("datos/datos-sin-outliers.csv"))
+```
+
+## Variación del precio por marca
+
+```{r}
+#| fig-cap: "Precio promedio por marca"
+#| label: fig-promedio-marcas
+ggplot2::ggplot(datos_limpios, aes(x = reorder(marca, - precio_en_usd), y = precio_en_usd)) + 
+  geom_bar(stat = "summary", fun = "mean", fill = "#112446") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab("") +
+  ylab("Precio promedio")
+
+```
+## Variación del precio por carrocería
+
+```{r}
+#| fig-cap: "Precio promedio por carrocería"
+#| label: fig-promedio-carrocerias
+ggplot(datos_limpios, aes(x = reorder(carroceria, - precio_en_usd), y = precio_en_usd)) + 
+  geom_bar(stat = "summary", fun = "mean", fill = "#112446") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab("") +
+  ylab("Precio promedio") +
+  ggtitle("Precio promedio por carrocería")
+```
+
+
+# Metodología {.scrollable}
+
+::: {.fragment}
+
+Correlación entre las variables:
+
+```{r}
+#| fig-cap: "Correlación entre variables numéricas"
+#| label: fig-correlaciones
+variables_numericas <- datos_limpios %>%
+  select_if(is.numeric) %>%
+  dplyr::select("precio_en_usd", everything())
+
+hchart(cor(variables_numericas))
+
+```
+:::
+
+# Metodología {.scrollable}
+
+
+Se ajustan dos modelos de regresión:
+
+::: {.incremental}
+-   Para todos los datos
+-   Quitando outliers
+:::
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+modelo_nulo <- lm(precio_en_usd ~ 1 -marca -modelo -transmision -color -tipo_motor -carroceria -traccion , datos_limpios)
+modelo_full <- lm(precio_en_usd ~ . -marca -modelo -transmision -color -tipo_motor -carroceria -traccion, datos_limpios)
+step_aic <- step(modelo_nulo, scope = formula(modelo_full), direction = "both", k = 2, trace = 0)
+
+```
+
+## Comparación de modelos {.scrollable}
+
+```{r, results='asis'}
+#| warning: false
+#| label: tbl-step-aic-sin-out
+#| tbl-cap: "Comparación modelo con y sin outliers"
+
+modelo_nulo <- lm(precio_en_usd ~ 1 -marca -modelo -transmision -color -tipo_motor -traccion , base_sin_out)
+modelo_full <- lm(precio_en_usd ~ . -marca -modelo -transmision -color -tipo_motor -traccion, base_sin_out)
+step_aic_sin_out <- step(modelo_nulo, scope = formula(modelo_full), direction = "both", k = 2, trace = 0)
+
+tab_model(step_aic, step_aic_sin_out, file="output.html", dv.labels = c("Modelo con outliers", "Modelo sin outliers")) 
+```
+
+---
+## Notamos que:
+
+::: {.fragment}
+-   [Mejor modelo]{.fragment .highlight-red}: Sin outliers
+-   No hay mucha diferencia
+:::
+
+
+::: {.fragment}
+Las variables significativas son:
+
+  - Edad
+  - Capacidad motor
+  - Kilometraje
+  - Número de fotos
+  - Días en el catálogo
+:::
+
+## Conclusiones
+
+::: {.incremental}
+- Los modelos podrían predecir bien el precio de un auto usado
+- La manera de encontrar outliers no fue la óptima
+- Quizás se podrían hacer mejores modelos estratificando
+:::
+
